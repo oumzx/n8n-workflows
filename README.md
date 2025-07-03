@@ -30,7 +30,7 @@ This n8n workflow automates the process of receiving, validating, scoring, and s
 
 ![Workflow Diagram](screenshot_1.png)
 
-![Data on Google Sheet](Screenshot_GoogleSheet.png)
+![Data on Google Sheet](Screenshoot_GoogleSheet.png)
 
 ![ALert on Slack](Screenshot_Slack.png)
 
