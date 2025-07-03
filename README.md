@@ -28,7 +28,7 @@ This n8n workflow automates the process of receiving, validating, scoring, and s
 
 ## 🖼️ Screenshot
 
-![Workflow Diagram](screenshot.png)
+![Workflow Diagram](screenshot_1.png)
 
 ---
 
