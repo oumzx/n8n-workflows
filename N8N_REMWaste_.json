@@ -1,0 +1,511 @@
+{
+  "name": "N8N_REMWaste",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-submission",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -20,
+        0
+      ],
+      "id": "4cc6640e-48df-47aa-9380-cc95289e5635",
+      "name": "Webhook",
+      "webhookId": "734554ce-f190-4e4e-b59b-1b559f0fc6a5"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-4DhlV4pdGLTa1UOKxjPn7fhty12AzqLXXTkfMH8teA",
+          "mode": "list",
+          "cachedResultName": "Sheet_N8N_REMWaste",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-4DhlV4pdGLTa1UOKxjPn7fhty12AzqLXXTkfMH8teA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Feuille 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-4DhlV4pdGLTa1UOKxjPn7fhty12AzqLXXTkfMH8teA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $json.timestamp }}",
+            "full_name": "={{ $json.full_name }}",
+            "email": "={{ $json.email }}",
+            "phone": "={{ $json.phone }}",
+            "company_size": "={{ $json.company_size }}",
+            "budget": "={{ $json.budget }}",
+            "interest_level": "={{ $json.interest_level }}",
+            "score": "={{ $json.score }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "full_name",
+              "displayName": "full_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "company_size",
+              "displayName": "company_size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "interest_level",
+              "displayName": "interest_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        700,
+        200
+      ],
+      "id": "5846d46c-4c87-4b90-b587-d16a85bbfe78",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wbDVLU2dYGAtoBrl",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "notes": "Integrates all leads into a tracking system, including their score."
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0940TNHB6J",
+          "mode": "list",
+          "cachedResultName": "n8n-chanel"
+        },
+        "text": "=⚠️ Erreur lors de l’enregistrement du lead {{ $('Data Validation & Scoring').item.json.full_name }} : {{ $('Data Validation & Scoring').item.json.error }} ",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        960,
+        320
+      ],
+      "id": "4bf95bc6-4717-40bb-885f-a2345687054d",
+      "name": "Error Append Row in Sheet",
+      "webhookId": "37b0b3e1-2ccd-4d0e-b5a8-42de7b3834ec",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "wI9bhicxY6vAoHIg",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1500,
+        -40
+      ],
+      "id": "4fa1c689-8799-4c9e-bf10-1c4791ee5778",
+      "name": "Wait",
+      "webhookId": "bc471458-2850-4168-8f49-cb26cdd1bddb"
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  // Accès aux données dans body\n  const lead = items[0].json.body; \n  \n  const required = [\"full_name\", \"email\", \"budget\", \"interest_level\"];\n  const missing = required.filter(f => !lead[f]);\n\n  if (missing.length > 0) {  \n    throw new Error(\"Champs manquants : \" + missing.join(\", \"));\n  }\n\n  // Normalisation\n  const interest = lead.interest_level?.toString().toLowerCase().trim() || '';\n  const budget = parseFloat(lead.budget) || 0;\n\n  // Calcul du score\n  let score = \"Cold\";\n  if (budget >= 5000 && interest === \"high\") {\n    score = \"Hot\";\n  } else if (budget >= 3000) {\n    score = \"Warm\";\n  }\n\n  return [{\n    json: {\n      ...lead,\n      budget,\n      interest_level: interest,\n      score,\n      timestamp: new Date().toISOString(),\n      missing_fields: missing\n    },\n    pairedItem: { item: 0 }\n  }];\n} catch (error) {\n  return [{\n    json: { \n      error: error.message, \n      raw: items[0].json,\n      stack: error.stack \n    },\n    pairedItem: { item: 0 }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "61af5700-f768-482d-8b57-14de5d64f387",
+      "name": "Data transform"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0940TNHB6J",
+          "mode": "list",
+          "cachedResultName": "n8n-chanel"
+        },
+        "text": "=❌ Error processing lead:  {{ $json.error }}\nLead Brut : {{ $json.raw.body.email || Unkwon }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        -200
+      ],
+      "id": "ace917b4-47b4-4c50-8a09-1e95c1adc596",
+      "name": "Error Alert Message",
+      "webhookId": "3ba469da-00e9-4405-a7e6-421f01f5db92",
+      "notesInFlow": false,
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "wI9bhicxY6vAoHIg",
+          "name": "Slack account"
+        }
+      },
+      "notes": "Sends an alert in case of validation failure or error in the Function node. "
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "16658738-f2e1-4882-ba6a-48efc98246bc",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "345da3c5-55b9-4ddc-9052-fc6664e5b986",
+      "name": "Data Validation & Scoring"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "06d5c3e3-1351-4fda-84c0-aa9e06100a13",
+              "leftValue": "={{ $json.score }}",
+              "rightValue": "Hot",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        80
+      ],
+      "id": "31bfd8d3-de78-48b1-bb80-af44974f9fb4",
+      "name": "Hot Lead Filter",
+      "notes": "Filters leads to notify only high-potential opportunities. "
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0940TNHB6J",
+          "mode": "list",
+          "cachedResultName": "n8n-chanel"
+        },
+        "text": "=🔥 New Hot Lead: {{ $('Append row in sheet').item.json.full_name }}, \n   Budget {{ $('Append row in sheet').item.json.budget }}$, \n   Interest: {{ $('Append row in sheet').item.json.interest_level }}\n – Check Google Sheet for details.\n",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1280,
+        -40
+      ],
+      "id": "2a55e2d7-ea78-403f-a3d3-0c8bc0b48ea3",
+      "name": "Alert Hot lead",
+      "webhookId": "7f6e22a4-e9d1-44ec-b29b-66f7c20b4832",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "wI9bhicxY6vAoHIg",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0940TNHB6J",
+          "mode": "list",
+          "cachedResultName": "n8n-chanel"
+        },
+        "text": "=📩 Follow-Up Recommended: {{ $('Hot Lead Filter').item.json.full_name }}  – High Interest Identified.",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1720,
+        -40
+      ],
+      "id": "b3b61049-2f64-4182-b78b-a07b9086785c",
+      "name": "Reminder",
+      "webhookId": "297631a1-24cd-467b-bfa7-aa952b0414b9",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "wI9bhicxY6vAoHIg",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://passiditest.app.n8n.cloud/webhook-test/lead-submission",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "full_name",
+              "value": "Camara FATOU"
+            },
+            {
+              "name": "email",
+              "value": "camara_fatou@example.com"
+            },
+            {
+              "name": "phone",
+              "value": "07111222333"
+            },
+            {
+              "name": "company_size",
+              "value": "40"
+            },
+            {
+              "name": "budget",
+              "value": "11340"
+            },
+            {
+              "name": "interest_level",
+              "value": "High"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        -240
+      ],
+      "id": "484c55c5-1548-4ac1-b433-20dec21f7994",
+      "name": "HTTP Request (Custom Form)"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Data transform",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Hot Lead Filter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Append Row in Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data transform": {
+      "main": [
+        [
+          {
+            "node": "Data Validation & Scoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Validation & Scoring": {
+      "main": [
+        [
+          {
+            "node": "Error Alert Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hot Lead Filter": {
+      "main": [
+        [
+          {
+            "node": "Alert Hot lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert Hot lead": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3bca727a-9360-4838-b088-f7a0d6001761",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4473f4d3e047155f2acd862256db490c9848ceb40f697ef9acca28645e569100"
+  },
+  "id": "x8p6RoLoxvn9gxpZ",
+  "tags": []
+}
